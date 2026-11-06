@@ -1,193 +1,229 @@
-# THAMES – Retail Customer Analytics & Recommendation Platform
+THAMES – Retail Customer Analytics & Recommendation Platform
 
-**THAMES** is a retail analytics platform built using Apache Spark, Databricks, Delta Lake and machine learning. It processes customer interaction data to generate behavioural insights, segment customers and recommend products through collaborative filtering.
+**THAMES** is an ML-powered retail intelligence platform that transforms customer activity data into actionable business insights through distributed data processing, customer segmentation and personalized product recommendations.
+
+Built using **Databricks, PySpark, Delta Lake, Spark MLlib, MLflow and Streamlit**.
+
+---
 
 ## Project Overview
 
-THAMES demonstrates how large-scale retail activity data can be transformed into actionable customer insights using distributed data processing and machine learning.
+THAMES simulates a retail analytics environment and processes customer interactions across product views, cart additions and purchases.
 
-The platform uses synthetic retail data representing customer behaviour across product views, cart additions and purchases.
+The platform combines data engineering, machine learning and interactive analytics to demonstrate an end-to-end retail intelligence workflow.
 
-### Dataset
+### Dataset at a Glance
 
 | Dataset | Records |
 |---|---:|
 | Customers | 10,000 |
 | Products | 500 |
 | Customer activity events | 100,000 |
-| Customer features | 10,000 |
+| Customer feature records | 10,000 |
 | Generated recommendations | 49,995 |
+
+*Data is synthetically generated for project demonstration.*
+
+---
 
 ## Key Features
 
 ### 1. Customer Analytics
-- Customer activity analysis.
-- Views, cart additions and purchase tracking.
-- Customer spending and behavioural feature engineering.
-- Product and category-level analytics.
+- Customer behavioural analysis using interaction data.
+- Tracking of product views, cart additions and purchases.
+- Customer-level feature engineering.
+- Spending and purchasing behaviour analysis.
 
-### 2. Customer Segmentation
-- K-Means clustering using Spark MLlib.
-- Customer segmentation based on behavioural features.
-- Analysis of purchasing and engagement patterns.
+### 2. Product Catalogue
+- Catalogue containing 500 synthetic retail products.
+- Category and product search filters.
+- Product attributes including price, brand, material, colour and ratings.
 
-### 3. Product Recommendation Engine
-- ALS collaborative filtering using Spark MLlib.
-- Recommendations generated for customers based on historical interactions.
-- Previously interacted-with products excluded from recommendations.
-- Five recommendations generated per eligible customer.
+### 3. Customer Segmentation
+- K-Means clustering using Apache Spark MLlib.
+- Feature standardization and behavioural segmentation.
+- Analysis of customer purchasing and engagement patterns.
 
-### 4. MLflow Experiment Tracking
-- Model and experiment logging.
+### 4. Product Recommendation Engine
+- Collaborative filtering using the Alternating Least Squares (ALS) algorithm.
+- Implemented using Spark MLlib.
+- Five unseen product recommendations generated per eligible customer.
+- Recommendations ranked using predicted ALS scores.
+
+### 5. MLflow Experiment Tracking
+- Experiment and parameter logging.
 - ALS model artifact tracking.
 - Customer and product indexer logging.
-- Training and recommendation metadata.
+- Model training metadata and experiment records.
 
-### 5. Interactive Streamlit Dashboard
-The dashboard includes six sections:
-- Overview
+### 6. Interactive Dashboard
+Built with Streamlit and Plotly, featuring:
+- Platform Overview
 - Product Catalogue
 - Customer Analytics
 - Customer Segmentation
 - Product Recommendations
 - MLflow Tracking
 
+---
+
 ## Technology Stack
 
-| Component | Technologies |
+| Layer | Technologies |
 |---|---|
 | Programming | Python |
-| Data Processing | PySpark, Spark SQL |
+| Distributed Processing | Apache PySpark, Spark SQL |
 | Data Platform | Databricks |
 | Storage | Delta Lake |
 | Machine Learning | Spark MLlib, K-Means, ALS |
 | Experiment Tracking | MLflow |
 | Dashboard | Streamlit, Plotly |
-| Database Connectivity | Databricks SQL Connector |
+| Connectivity | Databricks SQL Connector |
 | Version Control | Git, GitHub |
 
-## Architecture
+---
+
+## System Architecture
 
 ```text
-Synthetic Retail Data
-        |
-        v
-Databricks + PySpark
-        |
-        v
-Data Cleaning and Feature Engineering
-        |
-        v
-Delta Lake Tables
-        |
-        +--------------------+
-        |                    |
-        v                    v
-K-Means Segmentation    ALS Recommendation Engine
-        |                    |
-        v                    v
-Customer Segments       Product Recommendations
-        |                    |
-        +----------+---------+
-                   |
-                   v
+          Synthetic Retail Data
+                    |
+                    v
+          Databricks + PySpark
+                    |
+                    v
+        Data Cleaning & Feature Engineering
+                    |
+                    v
+              Delta Lake
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+    K-Means Model          ALS Model
+          |                   |
+          v                   v
+ Customer Segments      Product Recommendations
+          |                   |
+          +---------+---------+
+                    |
+                    v
              MLflow Tracking
-                   |
-                   v
-          Streamlit Dashboard
-                   |
-                   v
-         Interactive Analytics
+                    |
+                    v
+           Streamlit Dashboard
+                    |
+                    v
+          Interactive Analytics
 ```
 
-# Local Setup
+---
 
-# Prerequisites
-- Python 3.10 or later (use a version compatible with your installed dependencies).
+## Model Evaluation
+
+The ALS recommendation model was evaluated using a train/test split and full-catalogue ranking methodology.
+
+Evaluation metrics:
+- Precision@5
+- Recall@5
+- NDCG@5
+
+The initial evaluation indicated limited recommendation relevance, highlighting the need for more realistic customer preference patterns in synthetic interaction data.
+
+Further improvements to synthetic data generation and recommendation quality are planned.
+
+---
+
+## Repository Structure
+
+```text
+THAMES/
+│
+├── notebooks/
+│   ├── day1.ipynb
+│   ├── product_catalogue_creation.ipynb
+│   └── thames_large_dataset.ipynb
+│
+├── dashboard/
+│   └── app.py
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+*Note: The current repository keeps `app.py` in the root directory. The structure above can be updated if the dashboard is moved into a separate folder.*
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Python 3.10 or later, compatible with the installed dependencies.
 - A Databricks workspace.
-- Access to the THAMES Delta tables.
+- Access to the required THAMES Delta tables.
 - Databricks SQL connection credentials.
 
-### Installation
-
-Clone the repository:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/rusheel04/THAMES.git
 cd THAMES
 ```
 
-Create a virtual environment:
+### 2. Create a Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it on Windows:
+Activate on Windows:
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-# Databricks Configuration
+### 4. Configure Databricks Credentials
 
-Create a local `.streamlit/secrets.toml` file and configure your Databricks connection credentials.
+Create a `.streamlit/secrets.toml` file locally and provide the Databricks connection details using the secret keys expected by `app.py`.
 
-The configuration must use the secret key names expected by `app.py`.
+Never commit credentials, access tokens or passwords to GitHub.
 
-**Never commit access tokens, passwords or private credentials to GitHub.**
-
-### Run the Dashboard
+### 5. Run the Dashboard
 
 ```bash
 streamlit run app.py
 ```
 
-The dashboard will be available locally at:
+Open the application at:
 
 ```text
 http://localhost:8501
 ```
 
-# Machine Learning Evaluation
+---
 
-The ALS recommendation model has been trained using customer-product interaction data.
+## Future Enhancements
 
-A preliminary full-catalogue evaluation was performed using a train/test split and the following ranking metrics:
+- More realistic customer preference modelling.
+- Improved recommendation quality and model benchmarking.
+- Automated data processing using Databricks Workflows.
+- Dynamic customer event ingestion.
+- Automated model retraining and evaluation.
+- Dashboard deployment and monitoring.
 
-- Precision@5
-- Recall@5
-- NDCG@5
+---
 
-The initial results indicated limited recommendation relevance, highlighting the need for more realistic customer preference patterns in synthetic data generation.
-
-Further model improvements and evaluation are ongoing.
-
-#Project Status
-
-Current implementation:
-- Large-scale synthetic dataset generation.
-- Customer feature engineering.
-- K-Means customer segmentation.
-- ALS collaborative filtering.
-- MLflow experiment tracking.
-- Interactive Streamlit analytics dashboard.
-
-Planned improvements:
-- Improved synthetic customer preference modelling.
-- Recommendation model benchmarking.
-- Automated data processing with Databricks Workflows.
-- Dynamic event ingestion and dashboard refresh.
-- Application deployment.
-
-Author
+## Author
 
 Rusheel Ganguly
 
 GitHub: [@rusheel04](https://github.com/rusheel04)
+
+Project Repository: [THAMES](https://github.com/rusheel04/THAMES)
